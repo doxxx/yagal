@@ -4,7 +4,7 @@ function assert(condition, message) {
   }
 }
 
-function superTypeOf(x) {
+function _typeOf(x) {
   if (Array.isArray(x)) {
     return 'array';
   }
@@ -21,7 +21,7 @@ function clone(x) {
         return seen[s];
       }
     }
-    switch(superTypeOf(x)) {
+    switch(_typeOf(x)) {
       case 'object':
         var newObject = Object.create(Object.getPrototypeOf(x));
         seen[x] = newObject;
