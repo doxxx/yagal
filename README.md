@@ -9,3 +9,10 @@ It is intended to be usable in multiple environments, including the browser
 and node.js.
 
 **WORK IN PROGRESS**
+
+Documentation
+-------------
+
+Documentation is in the form of Markdown files in the `docs` directory. HTML
+formatted documentation can be generated using `grunt docco`, which outputs
+into the `docs/html` directory.
