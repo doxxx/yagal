@@ -2,46 +2,54 @@ function Fitness(values) {
   this.setValues(values);
 }
 
+Fitness.prototype.weights = function() {
+  return this._weights;
+};
+
+Fitness.prototype.weightedValues = function() {
+  return this._weightedValues;
+};
+
 Fitness.prototype.setValues = function(values) {
-  if (this.weights === undefined) {
+  if (this._weights === undefined) {
     throw 'Fitness class has no weights defined; use defineFitnessClass([weights...])';
   }
 
   var weighted = values.slice();
 
   for (var i = 0; i < weighted.length; i++) {
-    weighted[i] = weighted[i] * this.weights[i];
+    weighted[i] = weighted[i] * this._weights[i];
   }
 
-  this.weightedValues = weighted;
+  this._weightedValues = weighted;
 
   return this;
 };
 
 Fitness.prototype.values = function() {
-  if (this.weights === undefined) {
+  if (this._weights === undefined) {
     throw 'Fitness class has no weights defined';
   }
 
-  var unweighted = this.weightedValues.slice();
+  var unweighted = this._weightedValues.slice();
 
   for (var i = 0; i < unweighted.length; i++) {
-    unweighted[i] = unweighted[i] / this.weights[i];
+    unweighted[i] = unweighted[i] / this._weights[i];
   }
 
   return unweighted;
 };
 
 Fitness.prototype.compare = function(other) {
-  if (this.weightedValues.length !== other.weightedValues.length) {
+  if (this._weightedValues.length !== other._weightedValues.length) {
     throw 'Cannot compare Fitnesses with differing lengths';
   }
 
-  for (var i = 0; i < this.weightedValues.length; i++) {
-    if (this.weightedValues[i] < other.weightedValues[i]) {
+  for (var i = 0; i < this._weightedValues.length; i++) {
+    if (this._weightedValues[i] < other._weightedValues[i]) {
       return -1;
     }
-    else if (this.weightedValues[i] > other.weightedValues[i]) {
+    else if (this._weightedValues[i] > other._weightedValues[i]) {
       return 1;
     }
   }
@@ -76,7 +84,7 @@ function defineFitnessClass(weights) {
 
   ctor.prototype = Object.create(Fitness.prototype);
   ctor.prototype.constructor = ctor;
-  ctor.prototype.weights = weights;
+  ctor.prototype._weights = weights;
 
   return ctor;
 }

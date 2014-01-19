@@ -5,7 +5,7 @@ describe('A Fitness', function() {
     var MyFitness = defineFitnessClass([1.0, 0.5]);
 
     it('can be defined with weights', function() {
-      expect(MyFitness.prototype.weights).toEqual([1.0, 0.5]);
+      expect(MyFitness.prototype.weights()).toEqual([1.0, 0.5]);
     });
 
     it('can be instantiated with values', function() {
@@ -19,7 +19,7 @@ describe('A Fitness', function() {
     var f1 = new MyFitness([50, 60]);
 
     it('should have correctly weighted values', function() {
-      expect(f1.weightedValues).toEqual([50, 30]);
+      expect(f1.weightedValues()).toEqual([50, 30]);
     });
 
     it('should compare as equal to itself', function() {
