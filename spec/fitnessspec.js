@@ -18,6 +18,10 @@ describe('A Fitness', function() {
     var MyFitness = defineFitnessClass([1.0, 0.5]);
     var f1 = new MyFitness([[50, 60]]);
 
+    it('should have correctly weighted values', function() {
+      expect(f1.weightedValues).toEqual([[50, 30]]);
+    });
+
     it('should compare as equal to itself', function() {
       expect(f1.eq(f1)).toBe(true);
     });
@@ -30,11 +34,15 @@ describe('A Fitness', function() {
     it('should compare as less than another instance with higher values', function() {
       var f2 = new MyFitness([[60, 60]]);
       expect(f1.lt(f2)).toBe(true);
+      var f3 = new MyFitness([[50, 70]]);
+      expect(f1.lt(f3)).toBe(true);
     });
 
     it('should compare greater than another instance with lower values', function() {
       var f2 = new MyFitness([[40, 60]]);
       expect(f1.gt(f2)).toBe(true);
+      var f3 = new MyFitness([[50, 50]]);
+      expect(f1.gt(f3)).toBe(true);
     });
   });
 });

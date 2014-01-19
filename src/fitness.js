@@ -16,7 +16,7 @@ Fitness.prototype.setValues = function(values) {
     }
   }
 
-  this._values = weighted;
+  this.weightedValues = weighted;
 
   return this;
 };
@@ -26,7 +26,7 @@ Fitness.prototype.values = function() {
     throw 'Fitness class has no weights defined';
   }
 
-  var unweighted = this._values.slice();
+  var unweighted = this.weightedValues.slice();
   for (var i = 0; i < unweighted.length; i++) {
     var value = unweighted[i];
     for (var j = 0; j < this.weights.length; j++) {
@@ -37,15 +37,15 @@ Fitness.prototype.values = function() {
 };
 
 Fitness.prototype.compare = function(other) {
-  if (this._values.length !== other._values.length) {
+  if (this.weightedValues.length !== other.weightedValues.length) {
     throw 'Cannot compare Fitnesses with differing lengths';
   }
 
-  for (var i = 0; i < this._values.length; i++) {
-    if (this._values[i] < other._values[i]) {
+  for (var i = 0; i < this.weightedValues.length; i++) {
+    if (this.weightedValues[i] < other.weightedValues[i]) {
       return -1;
     }
-    else if (this._values[i] > other._values[i]) {
+    else if (this.weightedValues[i] > other.weightedValues[i]) {
       return 1;
     }
   }
