@@ -10,10 +10,7 @@ Fitness.prototype.setValues = function(values) {
   var weighted = values.slice();
 
   for (var i = 0; i < weighted.length; i++) {
-    var value = weighted[i];
-    for (var j = 0; j < this.weights.length; j++) {
-      value[j] = value[j] * this.weights[j];
-    }
+    weighted[i] = weighted[i] * this.weights[i];
   }
 
   this.weightedValues = weighted;
@@ -27,12 +24,11 @@ Fitness.prototype.values = function() {
   }
 
   var unweighted = this.weightedValues.slice();
+
   for (var i = 0; i < unweighted.length; i++) {
-    var value = unweighted[i];
-    for (var j = 0; j < this.weights.length; j++) {
-      value[j] = value[j] / this.weights[j];
-    }
+    unweighted[i] = unweighted[i] / this.weights[i];
   }
+
   return unweighted;
 };
 

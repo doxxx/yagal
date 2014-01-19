@@ -9,17 +9,17 @@ describe('A Fitness', function() {
     });
 
     it('can be instantiated with values', function() {
-      var f = new MyFitness([[50, 60]]);
-      expect(f.values()).toEqual([[50, 60]]);
+      var f = new MyFitness([50, 60]);
+      expect(f.values()).toEqual([50, 60]);
     });
   });
 
   describe('instance', function() {
     var MyFitness = defineFitnessClass([1.0, 0.5]);
-    var f1 = new MyFitness([[50, 60]]);
+    var f1 = new MyFitness([50, 60]);
 
     it('should have correctly weighted values', function() {
-      expect(f1.weightedValues).toEqual([[50, 30]]);
+      expect(f1.weightedValues).toEqual([50, 30]);
     });
 
     it('should compare as equal to itself', function() {
@@ -27,21 +27,21 @@ describe('A Fitness', function() {
     });
 
     it('should compare as equal to another instance with the same values', function() {
-      var f2 = new MyFitness([[50, 60]]);
+      var f2 = new MyFitness([50, 60]);
       expect(f1.eq(f2)).toBe(true);
     });
 
     it('should compare as less than another instance with higher values', function() {
-      var f2 = new MyFitness([[60, 60]]);
+      var f2 = new MyFitness([60, 60]);
       expect(f1.lt(f2)).toBe(true);
-      var f3 = new MyFitness([[50, 70]]);
+      var f3 = new MyFitness([50, 70]);
       expect(f1.lt(f3)).toBe(true);
     });
 
     it('should compare greater than another instance with lower values', function() {
-      var f2 = new MyFitness([[40, 60]]);
+      var f2 = new MyFitness([40, 60]);
       expect(f1.gt(f2)).toBe(true);
-      var f3 = new MyFitness([[50, 50]]);
+      var f3 = new MyFitness([50, 50]);
       expect(f1.gt(f3)).toBe(true);
     });
   });
