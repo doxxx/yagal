@@ -8,6 +8,12 @@ describe('A Fitness', function() {
       expect(MyFitness.prototype.weights()).toEqual([1.0, 0.5]);
     });
 
+    it('can be instantiated without values', function() {
+      var f = new MyFitness();
+      expect(f.values()).toBe(undefined);
+      expect(f.weightedValues()).toBe(undefined);
+    });
+
     it('can be instantiated with values', function() {
       var f = new MyFitness([50, 60]);
       expect(f.values()).toEqual([50, 60]);
@@ -43,6 +49,12 @@ describe('A Fitness', function() {
       expect(f1.gt(f2)).toBe(true);
       var f3 = new MyFitness([50, 50]);
       expect(f1.gt(f3)).toBe(true);
+    });
+
+    it('can have its values changed', function() {
+      f1.setValues([100, 80]);
+      expect(f1.values()).toEqual([100, 80]);
+      expect(f1.weightedValues()).toEqual([100, 40]);
     });
   });
 });

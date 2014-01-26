@@ -1,5 +1,7 @@
 function Fitness(values) {
-  this.setValues(values);
+  if (values !== undefined) {
+    this.setValues(values);
+  }
 }
 
 Fitness.prototype.weights = function() {
@@ -31,6 +33,10 @@ Fitness.prototype.values = function() {
     throw 'Fitness class has no weights defined';
   }
 
+  if (this._weightedValues === undefined) {
+    return undefined;
+  }
+
   var unweighted = this._weightedValues.slice();
 
   for (var i = 0; i < unweighted.length; i++) {
@@ -41,6 +47,10 @@ Fitness.prototype.values = function() {
 };
 
 Fitness.prototype.compare = function(other) {
+  if (this._weightedValues === undefined) {
+    return undefined;
+  }
+
   if (this._weightedValues.length !== other._weightedValues.length) {
     throw 'Cannot compare Fitnesses with differing lengths';
   }
@@ -75,6 +85,10 @@ Fitness.prototype.lte = function(other) {
 
 Fitness.prototype.gte = function(other) {
   return this.compare(other) >= 0;
+};
+
+Fitness.prototype.valid = function() {
+  return this._weightedValues.length > 0;
 };
 
 function defineFitnessClass(weights) {
