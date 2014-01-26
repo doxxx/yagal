@@ -1,4 +1,4 @@
-/* globals initRepeat, initIterate: false */
+/* globals initRepeat, initIterate, selRandom: false */
 
 describe('The initRepeat function', function() {
   it('should create a container with the values returned from N invocations of a function', function() {
@@ -17,5 +17,15 @@ describe('The initIterate function', function() {
     };
     var arr = initIterate(Array, f);
     expect(arr).toEqual([1, 2, 3]);
+  });
+});
+
+describe('The selRandom function', function() {
+  it('should select N random elements from an array', function() {
+    var arr = [1, 2, 3, 4, 5];
+    var r = selRandom(arr, 10);
+    expect(r.every(function(e) { return arr.indexOf(e) >= 0; })).toBe(true);
+    var r2 = selRandom(arr, 10);
+    expect(r2).not.toEqual(r);
   });
 });

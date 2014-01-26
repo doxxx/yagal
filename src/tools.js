@@ -15,3 +15,11 @@ function initRepeat(container, func, n) {
 function initIterate(container, generator) {
   return _newContainerWithArgs(container, generator());
 }
+
+function selRandom(individuals, k) {
+  var r = [];
+  for (var i = 0; i < k; i++) {
+    r.push(individuals[Math.floor(Math.random() * individuals.length)]);
+  }
+  return r;
+}
