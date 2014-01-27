@@ -1,4 +1,4 @@
-/* globals initRepeat, initIterate, selRandom: false */
+/* globals initRepeat, initIterate, selRandom, Creator, maxByFitness, Fitness: false */
 
 describe('The initRepeat function', function() {
   it('should create a container with the values returned from N invocations of a function', function() {
@@ -27,5 +27,41 @@ describe('The selRandom function', function() {
     expect(r.every(function(e) { return arr.indexOf(e) >= 0; })).toBe(true);
     var r2 = selRandom(arr, 10);
     expect(r2).not.toEqual(r);
+  });
+});
+
+describe('The maxByFitness function', function() {
+  it('should return the object with the greatest fitness', function() {
+    var creator = new Creator();
+    creator.create('FitnessMax', Fitness, { _weights: [1.0] });
+    var arr = [
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() }
+    ];
+    arr[0].fitness.setValues([10]);
+    arr[1].fitness.setValues([5]);
+    arr[2].fitness.setValues([20]);
+    arr[3].fitness.setValues([1]);
+    var max = maxByFitness(arr);
+    expect(max.fitness.values()).toEqual([20]);
+  });
+
+  it('should return the object with the greatest fitness (negative weight)', function() {
+    var creator = new Creator();
+    creator.create('FitnessMax', Fitness, { _weights: [-1.0] });
+    var arr = [
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() }
+    ];
+    arr[0].fitness.setValues([-10]);
+    arr[1].fitness.setValues([-5]);
+    arr[2].fitness.setValues([-20]);
+    arr[3].fitness.setValues([-1]);
+    var max = maxByFitness(arr);
+    expect(max.fitness.values()).toEqual([-20]);
   });
 });

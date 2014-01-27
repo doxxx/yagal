@@ -23,3 +23,14 @@ function selRandom(individuals, k) {
   }
   return r;
 }
+
+function maxByFitness(arr) {
+  var r = null;
+  for (var i = 0; i < arr.length; i++) {
+    var e = arr[i];
+    if (r === null || e.fitness.gt(r.fitness)) {
+      r = e;
+    }
+  }
+  return r;
+}
