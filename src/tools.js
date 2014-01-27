@@ -34,3 +34,12 @@ function maxByFitness(arr) {
   }
   return r;
 }
+
+function selTournament(individuals, size, k) {
+  var r = [];
+  for (var i = 0; i < k; i++) {
+    var aspirants = selRandom(individuals, size);
+    r.push(maxByFitness(aspirants));
+  }
+  return r;
+}

@@ -1,4 +1,4 @@
-/* globals initRepeat, initIterate, selRandom, Creator, maxByFitness, Fitness: false */
+/* jshint -W117 */
 
 describe('The initRepeat function', function() {
   it('should create a container with the values returned from N invocations of a function', function() {
@@ -63,5 +63,30 @@ describe('The maxByFitness function', function() {
     arr[3].fitness.setValues([-1]);
     var max = maxByFitness(arr);
     expect(max.fitness.values()).toEqual([-20]);
+  });
+});
+
+describe('The selTournament function', function() {
+  it('should select N winners from N tournament rounds consisting of M random individuals', function() {
+    setupSeededRandom();
+    var creator = new Creator();
+    creator.create('FitnessMax', Fitness, { _weights: [1.0] });
+    var arr = [
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() },
+      { fitness: new creator.FitnessMax() }
+    ];
+    arr[0].fitness.setValues([10]);
+    arr[1].fitness.setValues([5]);
+    arr[2].fitness.setValues([20]);
+    arr[3].fitness.setValues([1]);
+    var winners = selTournament(arr, 2, 5);
+    expect(winners[0].fitness.values()).toEqual([20]);
+    expect(winners[1].fitness.values()).toEqual([5]);
+    expect(winners[2].fitness.values()).toEqual([10]);
+    expect(winners[3].fitness.values()).toEqual([20]);
+    expect(winners[4].fitness.values()).toEqual([20]);
+    teardownSeededRandom();
   });
 });
