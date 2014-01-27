@@ -1,11 +1,11 @@
-/* jshint -W117 */
+/* global yagal_creator, yagal_fitness, yagal_tools, setupSeededRandom, teardownSeededRandom: false */
 
 describe('The initRepeat function', function() {
   it('should create a container with the values returned from N invocations of a function', function() {
     var f = function() {
       return 1;
     };
-    var arr = initRepeat(Array, f, 3);
+    var arr = yagal_tools.initRepeat(Array, f, 3);
     expect(arr).toEqual([1, 1, 1]);
   });
 });
@@ -15,7 +15,7 @@ describe('The initIterate function', function() {
     var f = function() {
       return [1, 2, 3];
     };
-    var arr = initIterate(Array, f);
+    var arr = yagal_tools.initIterate(Array, f);
     expect(arr).toEqual([1, 2, 3]);
   });
 });
@@ -23,17 +23,17 @@ describe('The initIterate function', function() {
 describe('The selRandom function', function() {
   it('should select N random elements from an array', function() {
     var arr = [1, 2, 3, 4, 5];
-    var r = selRandom(arr, 10);
+    var r = yagal_tools.selRandom(arr, 10);
     expect(r.every(function(e) { return arr.indexOf(e) >= 0; })).toBe(true);
-    var r2 = selRandom(arr, 10);
+    var r2 = yagal_tools.selRandom(arr, 10);
     expect(r2).not.toEqual(r);
   });
 });
 
 describe('The maxByFitness function', function() {
   it('should return the object with the greatest fitness', function() {
-    var creator = new Creator();
-    creator.create('FitnessMax', Fitness, { _weights: [1.0] });
+    var creator = new yagal_creator.Creator();
+    creator.create('FitnessMax', yagal_fitness.defineFitnessClass([1.0]));
     var arr = [
       { fitness: new creator.FitnessMax() },
       { fitness: new creator.FitnessMax() },
@@ -44,13 +44,13 @@ describe('The maxByFitness function', function() {
     arr[1].fitness.setValues([5]);
     arr[2].fitness.setValues([20]);
     arr[3].fitness.setValues([1]);
-    var max = maxByFitness(arr);
+    var max = yagal_tools.maxByFitness(arr);
     expect(max.fitness.values()).toEqual([20]);
   });
 
   it('should return the object with the greatest fitness (negative weight)', function() {
-    var creator = new Creator();
-    creator.create('FitnessMax', Fitness, { _weights: [-1.0] });
+    var creator = new yagal_creator.Creator();
+    creator.create('FitnessMax', yagal_fitness.defineFitnessClass([-1.0]));
     var arr = [
       { fitness: new creator.FitnessMax() },
       { fitness: new creator.FitnessMax() },
@@ -61,7 +61,7 @@ describe('The maxByFitness function', function() {
     arr[1].fitness.setValues([-5]);
     arr[2].fitness.setValues([-20]);
     arr[3].fitness.setValues([-1]);
-    var max = maxByFitness(arr);
+    var max = yagal_tools.maxByFitness(arr);
     expect(max.fitness.values()).toEqual([-20]);
   });
 });
@@ -69,8 +69,8 @@ describe('The maxByFitness function', function() {
 describe('The selTournament function', function() {
   it('should select N winners from N tournament rounds consisting of M random individuals', function() {
     setupSeededRandom();
-    var creator = new Creator();
-    creator.create('FitnessMax', Fitness, { _weights: [1.0] });
+    var creator = new yagal_creator.Creator();
+    creator.create('FitnessMax', yagal_fitness.defineFitnessClass([1.0]));
     var arr = [
       { fitness: new creator.FitnessMax() },
       { fitness: new creator.FitnessMax() },
@@ -81,7 +81,7 @@ describe('The selTournament function', function() {
     arr[1].fitness.setValues([5]);
     arr[2].fitness.setValues([20]);
     arr[3].fitness.setValues([1]);
-    var winners = selTournament(arr, 2, 5);
+    var winners = yagal_tools.selTournament(arr, 2, 5);
     expect(winners[0].fitness.values()).toEqual([20]);
     expect(winners[1].fitness.values()).toEqual([5]);
     expect(winners[2].fitness.values()).toEqual([10]);

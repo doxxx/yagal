@@ -1,8 +1,12 @@
-/* globals defineFitnessClass: false */
+/* global yagal_fitness: false */
 
 describe('A Fitness', function() {
   describe('class', function() {
-    var MyFitness = defineFitnessClass([1.0, 0.5]);
+    var MyFitness;
+
+    beforeEach(function() {
+      MyFitness = yagal_fitness.defineFitnessClass([1.0, 0.5]);
+    });
 
     it('can be defined with weights', function() {
       expect(MyFitness.prototype.weights()).toEqual([1.0, 0.5]);
@@ -21,8 +25,13 @@ describe('A Fitness', function() {
   });
 
   describe('instance', function() {
-    var MyFitness = defineFitnessClass([1.0, 0.5]);
-    var f1 = new MyFitness([50, 60]);
+    var MyFitness;
+    var f1;
+
+    beforeEach(function() {
+      MyFitness = yagal_fitness.defineFitnessClass([1.0, 0.5]);
+      f1 = new MyFitness([50, 60]);
+    });
 
     it('should have correctly weighted values', function() {
       expect(f1.weightedValues()).toEqual([50, 30]);

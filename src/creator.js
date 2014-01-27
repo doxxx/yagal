@@ -1,27 +1,32 @@
-function Creator() {
-}
+var yagal_creator = (function() {
+  function Creator() {
+  }
 
-Creator.prototype.create = function(name, base, attrs) {
-  var ctor = function() {
-    var obj = base.apply(this, arguments);
+  Creator.prototype.create = function(name, base, attrs) {
+    var ctor = function() {
+      var obj = base.apply(this, arguments);
 
-    obj = typeof obj === 'object' ? obj : this;
+      obj = typeof obj === 'object' ? obj : this;
 
-    for (var attr in attrs) {
-      var x = attrs[attr];
-      if (typeof x === 'function') {
-        /* jshint -W055 */
-        x = new x();
+      for (var attr in attrs) {
+        var x = attrs[attr];
+        if (typeof x === 'function') {
+          /* jshint -W055 */
+          x = new x();
+        }
+        obj[attr] = x;
       }
-      obj[attr] = x;
-    }
 
-    return obj;
+      return obj;
+    };
+
+    ctor.prototype = Object.create(base.prototype);
+    ctor.prototype.constructor = ctor;
+
+    this[name] = ctor;
   };
 
-  ctor.prototype = Object.create(base.prototype);
-  ctor.prototype.constructor = ctor;
-
-  this[name] = ctor;
-
-};
+  return {
+    Creator: Creator
+  };
+}());

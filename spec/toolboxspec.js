@@ -1,10 +1,10 @@
-/* globals Toolbox: false */
+/* global yagal_toolbox: false */
 
 describe('A Toolbox', function() {
   var toolbox;
 
   beforeEach(function() {
-    toolbox = new Toolbox();
+    toolbox = new yagal_toolbox.Toolbox();
   });
 
   it('can register a function', function() {

@@ -1,10 +1,10 @@
-/* globals Creator: false */
+/* global yagal_creator: false */
 
 describe('A Creator', function() {
   var creator;
 
   beforeEach(function() {
-    creator = new Creator();
+    creator = new yagal_creator.Creator();
   });
 
   it('can define a new class', function() {
