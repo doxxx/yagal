@@ -90,3 +90,25 @@ describe('The selTournament function', function() {
     teardownSeededRandom();
   });
 });
+
+describe('The cxOnePoint function', function() {
+  it('should swap the genes at a random point in two indviduals', function() {
+    setupSeededRandom();
+    var ind1 = [1, 2, 3, 4];
+    var ind2 = [5, 6, 7, 8];
+    yagal_tools.cxOnePoint(ind1, ind2);
+    expect(ind1).toEqual([1, 6, 3, 4]);
+    expect(ind2).toEqual([5, 2, 7, 8]);
+    teardownSeededRandom();
+  });
+
+  it('should work with individuals of different lengths', function() {
+    setupSeededRandom();
+    var ind1 = [1, 2, 3, 4, 5, 6, 7];
+    var ind2 = [5, 6, 7, 8];
+    yagal_tools.cxOnePoint(ind1, ind2);
+    expect(ind1).toEqual([1, 6, 3, 4, 5, 6, 7]);
+    expect(ind2).toEqual([5, 2, 7, 8]);
+    teardownSeededRandom();
+  });
+});

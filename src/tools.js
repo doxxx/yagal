@@ -45,11 +45,21 @@ var yagal_tools = (function() {
     return r;
   }
 
+  function cxOnePoint(ind1, ind2) {
+    var size = Math.min(ind1.length, ind2.length);
+    var cxPoint = Math.floor(Math.random() * size);
+    var ind1Gene = ind1[cxPoint];
+    ind1[cxPoint] = ind2[cxPoint];
+    ind2[cxPoint] = ind1Gene;
+    return [ind1, ind2];
+  }
+
   return {
     initRepeat: initRepeat,
     initIterate: initIterate,
     maxByFitness: maxByFitness,
     selRandom: selRandom,
     selTournament: selTournament,
+    cxOnePoint: cxOnePoint,
   };
 }());
