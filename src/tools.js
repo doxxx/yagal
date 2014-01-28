@@ -54,6 +54,22 @@ var yagal_tools = (function() {
     return [ind1, ind2];
   }
 
+  function mutShuffleIndexes(probability, individual) {
+    var size = individual.length;
+    for (var i = 0; i < size; i++) {
+      if (Math.random() < probability) {
+        var swapIndex = Math.floor(Math.random() * (size - 1));
+        if (swapIndex >= i) {
+          swapIndex += 1;
+          var gene = individual[i];
+          individual[i] = individual[swapIndex];
+          individual[swapIndex] = gene;
+        }
+      }
+    }
+    return [individual];
+  }
+
   return {
     initRepeat: initRepeat,
     initIterate: initIterate,
@@ -61,5 +77,6 @@ var yagal_tools = (function() {
     selRandom: selRandom,
     selTournament: selTournament,
     cxOnePoint: cxOnePoint,
+    mutShuffleIndexes: mutShuffleIndexes,
   };
 }());

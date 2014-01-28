@@ -112,3 +112,22 @@ describe('The cxOnePoint function', function() {
     teardownSeededRandom();
   });
 });
+
+describe('The mutShuffleIndexes function', function() {
+  it('should shuffle the indexes of the input', function() {
+    setupSeededRandom();
+    var ind = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    yagal_tools.mutShuffleIndexes(0.2, ind);
+    expect(ind).toEqual([1, 2, 3, 4, 5, 10, 7, 8, 9, 6]);
+    teardownSeededRandom();
+  });
+  it('should be affected by the probability', function() {
+    setupSeededRandom();
+    var ind = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+    yagal_tools.mutShuffleIndexes(0, ind);
+    expect(ind).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    yagal_tools.mutShuffleIndexes(1, ind);
+    expect(ind).toEqual([8, 5, 2, 4, 10, 3, 7, 9, 1, 6]);
+    teardownSeededRandom();
+  });
+});
