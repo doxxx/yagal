@@ -93,7 +93,7 @@ var yagal_fitness = (function() {
   };
 
   Fitness.prototype.valid = function() {
-    return this._weightedValues.length > 0;
+    return this._weightedValues !== undefined && this._weightedValues.length > 0;
   };
 
   function defineFitnessClass(weights) {
