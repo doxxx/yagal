@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8"/>
+    <title>Example</title>
+  </head>
+
+  <body>
+    <script src="fitness.js"></script>
+    <script src="toolbox.js"></script>
+    <script src="creator.js"></script>
+    <script src="tools.js"></script>
+    <script src="algorithms.js"></script>
+
+    <script>
+      var creator = new yagal_creator.Creator();
+
+      creator.create('FitnessMin', yagal_fitness.defineFitnessClass([-1.0]));
+      creator.create('Individual', Array, { fitness: creator.FitnessMin });
+
+      var toolbox = new yagal_toolbox.Toolbox();
+      var genRandomGene = function() {
+        var genes = 'abcdefghijklmnopqrstuvwxyz';
+        return genes[Math.floor(Math.random() * genes.length)];
+      };
+      toolbox.register('expr_init', yagal_tools.initRepeat, Array, genRandomGene, 5);
+      toolbox.register('individual', yagal_tools.initIterate, creator.Individual, toolbox.expr_init);
+      toolbox.register('population', yagal_tools.initRepeat, Array, toolbox.individual);
+
+      var evalIndividual = function(individual) {
+        var target = 'hello';
+        var diffs = individual.map(function(c, i) {
+          return Math.abs(c.charCodeAt(0) - target.charCodeAt(i));
+        });
+        return [diffs.reduce(function(a, b) { return a + b }, 0)];
+      };
+
+      toolbox.register('evaluate', evalIndividual);
+      toolbox.register("select", yagal_tools.selTournament, 3);
+      toolbox.register("mate", yagal_tools.cxOnePoint);
+      toolbox.register("mutate", yagal_tools.mutShuffleIndexes, 0.05);
+
+      var pop = toolbox.population(300);
+
+      var hof = new yagal_tools.HallOfFame(1);
+
+      var start = new Date();
+      pop = yagal_algorithms.eaSimple(pop, toolbox, 0.5, 0.2, 50, hof);
+      var end = new Date()
+      var elapsed = end.getTime() - start.getTime();
+
+      console.log(hof.entries[0]);
+
+      console.log('Elapsed time: ' + elapsed + 'ms');
+    </script>
+  </body>
+
+</html>
