@@ -11,6 +11,9 @@ var yagal_toolbox = (function() {
   function clone(x) {
     var seen = {};
     function _clone(x) {
+      if (x === null) {
+        return null;
+      }
       for (var s in seen) {
         if (s === x) {
           return seen[s];
@@ -27,8 +30,8 @@ var yagal_toolbox = (function() {
         case 'array':
           var newArray = [];
           seen[x] = newArray;
-          for (var i = 0; i < x.length; i++) {
-            newArray.push(x[i]);
+          for (var pp in x) {
+            newArray[pp] = _clone(x[pp]);
           }
           return newArray;
         case 'number':
