@@ -29,6 +29,10 @@ var yagal_fitness = (function() {
     return this;
   };
 
+  Fitness.prototype.clearValues = function() {
+    delete this._weightedValues;
+  };
+
   Fitness.prototype.values = function() {
     if (this._weights === undefined) {
       throw 'Fitness class has no weights defined';

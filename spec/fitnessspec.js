@@ -65,5 +65,12 @@ describe('A Fitness', function() {
       expect(f1.values()).toEqual([100, 80]);
       expect(f1.weightedValues()).toEqual([100, 40]);
     });
+
+    it('can have its values cleared', function() {
+      f1.setValues([100, 80]);
+      expect(f1.values()).toEqual([100, 80]);
+      f1.clearValues();
+      expect(f1.values()).toBe(undefined);
+    });
   });
 });
