@@ -23,9 +23,9 @@ describe('The initIterate function', function() {
 describe('The selRandom function', function() {
   it('should select N random elements from an array', function() {
     var arr = [1, 2, 3, 4, 5];
-    var r = yagal_tools.selRandom(arr, 10);
+    var r = yagal_tools.selRandom(10, arr);
     expect(r.every(function(e) { return arr.indexOf(e) >= 0; })).toBe(true);
-    var r2 = yagal_tools.selRandom(arr, 10);
+    var r2 = yagal_tools.selRandom(10, arr);
     expect(r2).not.toEqual(r);
   });
 });
@@ -81,7 +81,7 @@ describe('The selTournament function', function() {
     arr[1].fitness.setValues([5]);
     arr[2].fitness.setValues([20]);
     arr[3].fitness.setValues([1]);
-    var winners = yagal_tools.selTournament(arr, 2, 5);
+    var winners = yagal_tools.selTournament(2, 5, arr);
     expect(winners[0].fitness.values()).toEqual([20]);
     expect(winners[1].fitness.values()).toEqual([5]);
     expect(winners[2].fitness.values()).toEqual([10]);

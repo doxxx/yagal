@@ -28,7 +28,7 @@ var yagal_tools = (function() {
     return r;
   }
 
-  function selRandom(individuals, k) {
+  function selRandom(k, individuals) {
     var r = [];
     for (var i = 0; i < k; i++) {
       r.push(individuals[Math.floor(Math.random() * individuals.length)]);
@@ -36,10 +36,10 @@ var yagal_tools = (function() {
     return r;
   }
 
-  function selTournament(individuals, size, k) {
+  function selTournament(size, k, individuals) {
     var r = [];
     for (var i = 0; i < k; i++) {
-      var aspirants = selRandom(individuals, size);
+      var aspirants = selRandom(size, individuals);
       r.push(maxByFitness(aspirants));
     }
     return r;
