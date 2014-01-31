@@ -131,3 +131,58 @@ describe('The mutShuffleIndexes function', function() {
     teardownSeededRandom();
   });
 });
+
+describe('A HallOfFame', function() {
+  var FitnessClass = yagal_fitness.defineFitnessClass([1.0]);
+  var hof;
+
+  beforeEach(function() {
+    hof = new yagal_tools.HallOfFame(5);
+  });
+
+  it('should sort individuals highest to lowest fitness', function() {
+    var i1 = { fitness: new FitnessClass([10]) };
+    var i2 = { fitness: new FitnessClass([20]) };
+    var i3 = { fitness: new FitnessClass([30]) };
+    hof.update([i2, i1, i3]);
+    expect(hof.entries[0]).toBe(i3);
+    expect(hof.entries[1]).toBe(i2);
+    expect(hof.entries[2]).toBe(i1);
+
+    var i4 = { fitness: new FitnessClass([15]) };
+    var i5 = { fitness: new FitnessClass([25]) };
+    hof.update([i4, i5]);
+    expect(hof.entries[0]).toBe(i3);
+    expect(hof.entries[1]).toBe(i5);
+    expect(hof.entries[2]).toBe(i2);
+    expect(hof.entries[3]).toBe(i4);
+    expect(hof.entries[4]).toBe(i1);
+  });
+
+  it('should keep the best individuals up to the maxSize', function() {
+    var i1 = { fitness: new FitnessClass([10]) };
+    var i2 = { fitness: new FitnessClass([20]) };
+    var i3 = { fitness: new FitnessClass([30]) };
+    var i4 = { fitness: new FitnessClass([15]) };
+    var i5 = { fitness: new FitnessClass([25]) };
+    hof.update([i1, i2, i3, i4, i5]);
+
+    var i6 = { fitness: new FitnessClass([5]) };
+    hof.update([i6]);
+    expect(hof.entries.length).toEqual(5);
+    expect(hof.entries[0]).toBe(i3);
+    expect(hof.entries[1]).toBe(i5);
+    expect(hof.entries[2]).toBe(i2);
+    expect(hof.entries[3]).toBe(i4);
+    expect(hof.entries[4]).toBe(i1);
+
+    var i7 = { fitness: new FitnessClass([35]) };
+    hof.update([i7]);
+    expect(hof.entries.length).toEqual(5);
+    expect(hof.entries[0]).toBe(i7);
+    expect(hof.entries[1]).toBe(i3);
+    expect(hof.entries[2]).toBe(i5);
+    expect(hof.entries[3]).toBe(i2);
+    expect(hof.entries[4]).toBe(i4);
+  });
+});

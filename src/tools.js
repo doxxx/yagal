@@ -70,6 +70,65 @@ var yagal_tools = (function() {
     return [individual];
   }
 
+  function indComp(a, b) {
+    return b.fitness.compare(a.fitness);
+  }
+
+  function indBisectRight(a, x) {
+    var lo = 0;
+    var hi = a.length;
+    while (lo < hi) {
+      var mid = Math.floor((lo + hi) / 2);
+      if (x.fitness.lt(a[mid].fitness)) {
+        hi = mid;
+      }
+      else {
+        lo = mid + 1;
+      }
+    }
+    return lo;
+  }
+
+  function HallOfFame(maxSize) {
+    this.maxSize = maxSize;
+    this.entries = [];
+  }
+
+  HallOfFame.prototype.update = function(pop) {
+    this.entries = this.entries.concat(pop);
+    this.entries.sort(indComp);
+    this.entries.length = this.maxSize;
+    /*
+    if (this.entries.length < this.maxSize) {
+      this.entries = this.entries.concat(pop);
+      this.entries.sort(indComp);
+      this.entries.length = this.maxSize;
+    }
+    else {
+      for (var i = 0; i < pop.length; i++) {
+        var ind = pop[i];
+        var lastIndex = this.entries.length - 1;
+        if (ind.fitness.gt(this.entries[lastIndex].fitness)) {
+          this.remove(lastIndex);
+          this.insert(ind);
+        }
+      }
+    }
+    */
+  };
+
+  /*
+  HallOfFame.prototype.insert = function(ind) {
+    var i = indBisectRight(this.entries, ind);
+    this.entries.splice(this.entries.length - i, 0, ind);
+  };
+
+  HallOfFame.prototype.remove = function(index) {
+    var len = this.entries.length;
+    this.entries.splice(len - (index % len + 1), 1);
+  };
+  */
+
   return {
     initRepeat: initRepeat,
     initIterate: initIterate,
@@ -78,5 +137,6 @@ var yagal_tools = (function() {
     selTournament: selTournament,
     cxOnePoint: cxOnePoint,
     mutShuffleIndexes: mutShuffleIndexes,
+    HallOfFame: HallOfFame,
   };
 }());
