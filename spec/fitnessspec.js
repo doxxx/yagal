@@ -33,6 +33,17 @@ describe('A Fitness', function() {
       f1 = new MyFitness([50, 60]);
     });
 
+    it('should be valid if it has the same number of values as weights', function() {
+      expect(f1.valid()).toEqual(true);
+    });
+
+    it('should be invalid if it does not have the same number of values as weights', function() {
+      var f2 = new MyFitness([]);
+      expect(f2.valid()).toEqual(false);
+      var f3 = new MyFitness([]);
+      expect(f2.valid()).toEqual(false);
+    });
+
     it('should have correctly weighted values', function() {
       expect(f1.weightedValues()).toEqual([50, 30]);
     });
@@ -58,6 +69,14 @@ describe('A Fitness', function() {
       expect(f1.gt(f2)).toBe(true);
       var f3 = new MyFitness([50, 50]);
       expect(f1.gt(f3)).toBe(true);
+    });
+
+    it('should compare as greater than an invalid instance', function() {
+      var f2 = new MyFitness([NaN, NaN]);
+      expect(f1.gt(f2)).toEqual(true);
+      expect(f2.lt(f1)).toEqual(true);
+      expect(f1.lt(f2)).toEqual(false);
+      expect(f2.gt(f1)).toEqual(false);
     });
 
     it('can have its values changed', function() {
