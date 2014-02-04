@@ -27,7 +27,7 @@ var yagal_algorithms = (function() {
     return offspring;
   }
 
-  function eaSimple(population, toolbox, cxpb, mutpb, ngen, hof) {
+  function eaSimple(population, toolbox, cxpb, mutpb, ngen, hof, feedback) {
     // evaluate fitness of starting population
     var fitnessesValues = toolbox.map(toolbox.evaluate, population);
     for (var i = 0; i < population.length; i++) {
@@ -39,6 +39,10 @@ var yagal_algorithms = (function() {
     }
 
     for (var gen = 1; gen <= ngen; gen++) {
+      if (feedback !== undefined) {
+        feedback(gen, hof.entries[0]);
+      }
+
       var offspring = toolbox.select(population.length, population);
 
       offspring = varAnd(offspring, toolbox, cxpb, mutpb);
